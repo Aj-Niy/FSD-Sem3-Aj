@@ -1,0 +1,2 @@
+//async - stack --|  event loop
+//sync - queues --|
