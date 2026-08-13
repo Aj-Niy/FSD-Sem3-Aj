@@ -2,3 +2,5 @@ async - stack --|  event loop
 sync - queues --|
 
 Priority : process.nextTick > promise > setImmediate > setTimeout
+
+Event fire --> Event Dispacher

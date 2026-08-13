@@ -2,20 +2,20 @@ import EventEmitter from "node:events";
 
 
 function DOMEvents() {
-    const myEmitter = new EventEmitter();
+    const emitter = new EventEmitter();
 
     //event template
     return {
-        addEventListener(eventType, callback) {
-            myEmitter.on(eventType, callback);
+        addEventListener(eventType, listener) {
+            emitter.on(eventType, listener);
         },
-        removeEventListener(eventType, callback) {
-            myEmitter.off(eventType, callback);
+        removeEventListener(eventType, listener) {
+            emitter.off(eventType, listener);
         },
-        dispatchEvent(eventType, detail) {
-            eventType.target = this;
-            eventType.currentTarget = this;
-            myEmitter.emit(eventType, detail);
+        dispatchEvent(event) {
+            event.target = this;
+            event.currentTarget = this;
+            emitter.emit(event.eventType, event);
         }
     }
 }
@@ -23,13 +23,25 @@ function DOMEvents() {
 
 export default DOMEvents;
 
-const button = DOMEvents();
-function clickHandler(event) {
-    console.log("click function");
+const button=DOMEvents();
+button.addEventListener('save',()=>{
+    console.log('saving...')
+})
+function handleClick(event){
+    console.log('button clicked');
 }
-button.addEventListener("click", clickHandler);
-
+button.addEventListener('click',handleClick);
 button.dispatchEvent({
-    eventType: 'click',
-    detail: "click function"
+    eventType:"save"
+});
+button.dispatchEvent({
+    eventType:"click"
+});
+
+const button2=DOMEvents();
+button2.addEventListener('submit',()=>{
+    console.log('submitting...')
+})
+button2.dispatchEvent({
+    eventType:"submit"
 });
